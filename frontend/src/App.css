@@ -36,7 +36,7 @@ body {
 
 /* ── Header ────────────────────────────────────────── */
 .app-header {
-  padding: 2rem 2rem 1.2rem;
+  padding: 1.2rem 1rem 1rem;
   border-bottom: 1px solid var(--border);
   background:
     radial-gradient(ellipse at 60% 0%, #3b2510 0%, transparent 60%),
@@ -47,7 +47,7 @@ body {
 
 .app-title {
   display: flex;
-  gap: 5px;
+  gap: 4px;
   flex-wrap: wrap;
   margin-bottom: 0.4rem;
 }
@@ -56,12 +56,12 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 3rem;
-  height: 3rem;
+  width: clamp(2rem, 8vw, 3rem);
+  height: clamp(2rem, 8vw, 3rem);
+  font-size: clamp(1rem, 4vw, 1.6rem);
   background: var(--tile);
   color: var(--tile-text);
   font-family: 'Playfair Display', serif;
-  font-size: 1.6rem;
   font-weight: 900;
   border-radius: 4px;
   box-shadow:
@@ -84,6 +84,7 @@ body {
   padding: 2rem 1.5rem;
 }
 
+/* 2. El layout: apila panel debajo del tablero en pantallas pequeñas */
 .layout {
   display: grid;
   grid-template-columns: auto 280px;
@@ -92,7 +93,23 @@ body {
 }
 
 @media (max-width: 860px) {
-  .layout { grid-template-columns: 1fr; }
+  .layout {
+    grid-template-columns: 1fr;   /* una sola columna */
+  }
+
+  /* El panel pasa a ser una fila horizontal de tarjetas en tablet,
+     y vuelve a columna en móvil pequeño */
+  .layout__panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .layout__panel {
+    grid-template-columns: 1fr;   /* vuelve a columna en móvil */
+  }
 }
 
 /* ── Error banner ──────────────────────────────────── */
@@ -107,6 +124,12 @@ body {
 }
 
 /* ── Board ─────────────────────────────────────────── */
+
+.layout__board {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .board-wrapper {
   background: var(--wood);
   padding: 12px;
@@ -116,6 +139,7 @@ body {
     0 8px 40px rgba(0,0,0,.7),
     inset 0 1px 0 rgba(255,255,255,.08);
   display: inline-block;
+  min-width: fit-content;
 }
 
 .board-grid {
@@ -423,4 +447,18 @@ kbd {
   height: 18px;
   border-radius: 3px;
   display: block;
+}
+
+
+.board-scroll-hint {
+  display: none;
+  text-align: center;
+  font-size: .75rem;
+  color: var(--text-muted);
+  margin-bottom: .5rem;
+  letter-spacing: .03em;
+}
+
+@media (max-width: 860px) {
+  .board-scroll-hint { display: block; }
 }

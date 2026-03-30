@@ -32,29 +32,32 @@ export default function Board({ lettersBoard, pointsBoard }) {
   if (!cells) return null
 
   return (
-    <div className="board-wrapper">
-      <div className="board-grid">
-        {cells.flat().map(({ r, c, letter, bonus, style, isCenter }) => (
-          <div
-            key={`${r}-${c}`}
-            className={`cell ${letter ? 'cell--filled' : ''} ${isCenter && !letter ? 'cell--center' : ''}`}
-            style={{ '--cell-bg': style.bg }}
-            title={style.title}
-          >
-            {letter ? (
-              <>
-                <span className="cell-letter">{letter.toUpperCase()}</span>
-                <span className="cell-points">{getLetterPoints(letter)}</span>
-              </>
-            ) : isCenter ? (
-              <span className="cell-star">★</span>
-            ) : style.label ? (
-              <span className="cell-label">{style.label}</span>
-            ) : null}
-          </div>
-        ))}
-      </div>
+  <div className="board-outer">
+    <div className="board-scroll-hint">← desliza para ver el tablero →</div>
+        <div className="board-wrapper">
+          <div className="board-grid">
+            {cells.flat().map(({ r, c, letter, bonus, style, isCenter }) => (
+              <div
+                key={`${r}-${c}`}
+                className={`cell ${letter ? 'cell--filled' : ''} ${isCenter && !letter ? 'cell--center' : ''}`}
+                style={{ '--cell-bg': style.bg }}
+                title={style.title}
+              >
+                {letter ? (
+                  <>
+                    <span className="cell-letter">{letter.toUpperCase()}</span>
+                    <span className="cell-points">{getLetterPoints(letter)}</span>
+                  </>
+                ) : isCenter ? (
+                  <span className="cell-star">★</span>
+                ) : style.label ? (
+                  <span className="cell-label">{style.label}</span>
+                ) : null}
+              </div>
+            ))}
+        </div>
     </div>
+  </div>
   )
 }
 

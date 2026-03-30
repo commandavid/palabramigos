@@ -22,6 +22,12 @@ export default function WordInput({ onSubmit, loading }) {
     setCurrent('')
   }
 
+  function handleFocus(e) {
+      setTimeout(() => {
+        e.target.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }, 300)
+  }
+
   function removeWord(index) {
     setWords(prev => prev.filter((_, i) => i !== index))
   }
@@ -63,6 +69,7 @@ export default function WordInput({ onSubmit, loading }) {
         <input
           ref={inputRef}
           className="word-field"
+          onFocus={handleFocus}
           type="text"
           value={current}
           onChange={e => setCurrent(e.target.value)}
@@ -88,7 +95,7 @@ export default function WordInput({ onSubmit, loading }) {
         {loading ? (
           <span className="spinner" />
         ) : (
-          '▶ Calcular'
+          'Calcular'
         )}
       </button>
     </div>
