@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import html2canvas from 'html2canvas'
 import Board from './components/Board'
 import WordInput from './components/WordInput'
+import Footer from './components/Footer'
 import './App.css'
 
 const API = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
@@ -12,6 +14,9 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [ready, setReady] = useState(false)
+  const [downloading, setDownloading] = useState(false)
+
+  const boardRef = useRef(null)
 
   // Cargar el tablero vacío al montar
   useEffect(() => {
@@ -54,6 +59,31 @@ export default function App() {
     }
   }
 
+  async function handleDownload() {
+    if (!boardRef.current) return
+    setDownloading(true)
+
+    try {
+      const canvas = await html2canvas(boardRef.current, {
+        backgroundColor: '#6b4c2a',
+        scale: 2,
+        useCORS: true,
+        logging: false,
+      })
+
+      const link = document.createElement('a')
+      link.download = `palabramigos-${Date.now()}.png`
+      link.href = canvas.toDataURL('image/png')
+      link.click()
+    } catch {
+      setError('No se pudo generar la imagen. Inténtalo de nuevo.')
+    } finally {
+      setDownloading(false)
+    }
+  }
+
+  const boardReady = totalPoints !== null
+
   return (
     <div className="app">
       <header className="app-header">
@@ -86,7 +116,9 @@ export default function App() {
         <div className="layout">
           <section className="layout__board">
             {ready ? (
-              <Board lettersBoard={lettersBoard} pointsBoard={pointsBoard} />
+              <div ref={boardRef}>
+                <Board lettersBoard={lettersBoard} pointsBoard={pointsBoard} />
+              </div>
             ) : (
               <div className="board-placeholder">
                 {error ? '—' : 'Conectando…'}
@@ -97,11 +129,29 @@ export default function App() {
           <aside className="layout__panel">
             <WordInput onSubmit={handleSubmit} loading={loading} />
 
-            {totalPoints !== null && (
+            {boardReady && (
               <div className="score-card">
                 <span className="score-label">Puntuación</span>
                 <span className="score-value">{totalPoints}</span>
                 <span className="score-unit">pts</span>
+              </div>
+            )}
+
+            {boardReady && (
+              <div className="download-card">
+                <div className="download-card__text">
+                  <span className="download-title">Guardar tablero</span>
+                  <span className="download-subtitle">
+                    Descarga el resultado como imagen PNG
+                  </span>
+                </div>
+                <button
+                  className="btn btn--download"
+                  onClick={handleDownload}
+                  disabled={downloading}
+                >
+                  {downloading ? <span className="spinner" /> : <>↓ Descargar</>}
+                </button>
               </div>
             )}
 
@@ -121,6 +171,13 @@ export default function App() {
           </aside>
         </div>
       </main>
+
+      {/* Rellena con tus datos */}
+      <Footer
+        name="David Sanz"
+        email="davidsanz@gmail.com"
+        github="commandavid"
+      />
     </div>
   )
 }

@@ -28,19 +28,39 @@
 
 body {
   font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
+  background: #B9E2E5;
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
+  background-image: url('/palabramigosBackground.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 860px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 /* ── Header ────────────────────────────────────────── */
-.app-header {
+.app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.app-header,
+.app-main {
   padding: 1.2rem 1rem 1rem;
   border-bottom: 1px solid var(--border);
-  background:
-    radial-gradient(ellipse at 60% 0%, #3b2510 0%, transparent 60%),
-    var(--surface);
+  position: relative;
+  z-index: 1;
 }
 
 .header-inner { max-width: 1200px; margin: 0 auto; }
@@ -84,7 +104,6 @@ body {
   padding: 2rem 1.5rem;
 }
 
-/* 2. El layout: apila panel debajo del tablero en pantallas pequeñas */
 .layout {
   display: grid;
   grid-template-columns: auto 280px;
@@ -94,11 +113,9 @@ body {
 
 @media (max-width: 860px) {
   .layout {
-    grid-template-columns: 1fr;   /* una sola columna */
+    grid-template-columns: 1fr;
   }
 
-  /* El panel pasa a ser una fila horizontal de tarjetas en tablet,
-     y vuelve a columna en móvil pequeño */
   .layout__panel {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -108,7 +125,7 @@ body {
 
 @media (max-width: 560px) {
   .layout__panel {
-    grid-template-columns: 1fr;   /* vuelve a columna en móvil */
+    grid-template-columns: 1fr;
   }
 }
 
@@ -181,7 +198,6 @@ body {
   font-size: clamp(10px, 1.2vw, 16px);
 }
 
-/* Tile with a letter */
 .cell--filled {
   background: var(--tile) !important;
   box-shadow:
@@ -449,7 +465,6 @@ kbd {
   display: block;
 }
 
-
 .board-scroll-hint {
   display: none;
   text-align: center;
@@ -461,4 +476,122 @@ kbd {
 
 @media (max-width: 860px) {
   .board-scroll-hint { display: block; }
+}
+
+/* ── Download card ─────────────────────────────────── */
+.download-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  animation: slideUp .3s ease;
+}
+
+.download-card__text {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+}
+
+.download-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.download-subtitle {
+  font-size: .78rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.btn--download {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: .55rem 1rem;
+  font-size: .88rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  transition: border-color .15s, color .15s;
+}
+
+.btn--download:not(:disabled):hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Footer ────────────────────────────────────────── */
+.app-footer {
+  margin-top: 3rem;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1.5rem 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.footer-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--accent);
+  letter-spacing: .03em;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-link {
+  font-size: .82rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color .15s;
+  letter-spacing: .02em;
+}
+
+.footer-link:hover {
+  color: var(--text);
+}
+
+@media (max-width: 560px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: .5rem;
+  }
+
+  .download-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn--download {
+    width: 100%;
+  }
 }
