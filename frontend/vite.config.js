@@ -1,8 +1,7 @@
-import { definePlugin } from 'vite'
+import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default {
+export default defineConfig({
   base: '/palabramigos/',   // must match your repo name exactly
   plugins: [react()],
-}
-
+})

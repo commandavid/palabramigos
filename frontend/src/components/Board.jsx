@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 const CELL_COLORS = {
-  T: { bg: '#b5403a', label: 'PT', title: 'Triple Palabra' },
+  T: { bg: '#b5403a', label: 'TP', title: 'Triple Palabra' },
   D: { bg: '#d4845a', label: 'DP', title: 'Doble Palabra' },
   '3': { bg: '#3a72b5', label: 'TL', title: 'Triple Letra' },
   '2': { bg: '#6aabce', label: 'DL', title: 'Doble Letra' },

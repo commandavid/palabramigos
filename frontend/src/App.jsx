@@ -59,16 +59,20 @@ export default function App() {
       <header className="app-header">
         <div className="header-inner">
           <h1 className="app-title">
-            <span className="title-tile">S</span>
-            <span className="title-tile">C</span>
-            <span className="title-tile">R</span>
+            <span className="title-tile">P</span>
+            <span className="title-tile">A</span>
+            <span className="title-tile">L</span>
             <span className="title-tile">A</span>
             <span className="title-tile">B</span>
-            <span className="title-tile">B</span>
-            <span className="title-tile">L</span>
-            <span className="title-tile">E</span>
+            <span className="title-tile">R</span>
+            <span className="title-tile">A</span>
+            <span className="title-tile">M</span>
+            <span className="title-tile">I</span>
+            <span className="title-tile">G</span>
+            <span className="title-tile">O</span>
+            <span className="title-tile">S</span>
           </h1>
-          <p className="app-subtitle">Solver — Encuentra la mejor jugada</p>
+          <p className="app-subtitle">Encuentra la colocación óptima</p>
         </div>
       </header>
 
